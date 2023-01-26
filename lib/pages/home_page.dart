@@ -1,10 +1,6 @@
-import 'package:digimon_encyclopedia/api/api.dart';
-import 'package:digimon_encyclopedia/api/digimon.dart';
 import 'package:digimon_encyclopedia/models/digimon_model.dart';
 import 'package:digimon_encyclopedia/repository/digimons_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:async';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +22,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('DIGIMONDEX'),
+        centerTitle: true,
+      ),
       body: FutureBuilder<List<DigimonModel>>(
         future: listDigimons,
         builder: (context, snapshot) {
@@ -56,16 +55,71 @@ class _HomePageState extends State<HomePage> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        child: ListTile(
-                          leading: Image.network(
-                            snapshot.data![index].img.toString(),
-                            scale: 1,
-                          ),
-                          title: Text(
-                            snapshot.data![index].name.toString(),
-                          ),
-                          subtitle: Text(
-                            snapshot.data![index].level.toString(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ClipRRect(
+                                child: Image.network(
+                                  snapshot.data![index].img.toString(),
+                                  width: 150,
+                                ),
+                                borderRadius: BorderRadius.circular(1000),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        snapshot.data![index].name
+                                            .toString()
+                                            .toUpperCase(),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 5,
+                                    color: Colors.white,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        snapshot.data![index].level
+                                            .toString()
+                                            .toUpperCase(),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
                         ),
                       );

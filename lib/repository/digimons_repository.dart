@@ -5,7 +5,7 @@ import 'dart:async';
 class DigimonsRepository {
   Future<List<DigimonModel>> getDigimonsRepositoryHome() async {
     Response response;
-    Dio dio = new Dio();
+    Dio dio = Dio();
 
     response =
         await dio.get<List>("https://digimon-api.vercel.app/api/digimon");
@@ -14,7 +14,6 @@ class DigimonsRepository {
       return DigimonModel.fromJson(e);
     }).toList();
 
-    print(listDigimons[1].name);
     return listDigimons;
   }
 }
